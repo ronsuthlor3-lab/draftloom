@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Draftloom — เขียนแบบ 2 มิติในเบราว์เซอร์</title>
+  <meta name="description" content="เปิด แก้ไข และบันทึกแบบ DXF ในเบราว์เซอร์ของคุณ วาดเส้น วงกลม ส่วนโค้ง ข้อความ เส้นบอกขนาด เลเยอร์ ดูดจุด — ไฟล์ไม่ถูกอัปโหลด">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="" width="30" height="30">
+      <strong>Draftloom</strong>
+      <span id="docname" class="docname">แบบร่าง</span>
+    </div>
+    <div class="filebtns" role="toolbar" aria-label="ไฟล์และมุมมอง">
+      <button type="button" id="f-new">ใหม่</button>
+      <button type="button" id="f-open">เปิด…</button>
+      <input type="file" id="f-input" accept=".dxf,.json,.dwg" hidden>
+      <button type="button" id="f-dxf">บันทึก DXF</button>
+      <button type="button" id="f-json">บันทึกงาน</button>
+      <button type="button" id="f-svg">SVG</button>
+      <button type="button" id="f-png">PNG</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" id="b-undo" title="ย้อนกลับ (Ctrl+Z)" aria-label="ย้อนกลับ">↶</button>
+      <button type="button" id="b-redo" title="ทำซ้ำ (Ctrl+Y)" aria-label="ทำซ้ำ">↷</button>
+      <button type="button" id="b-zin" title="ซูมเข้า" aria-label="ซูมเข้า">＋</button>
+      <button type="button" id="b-zout" title="ซูมออก" aria-label="ซูมออก">－</button>
+      <button type="button" id="b-fit" title="ดูทั้งแบบ">ดูทั้งหมด</button>
+    </div>
+  </header>
+
+  <nav class="tools" id="tools" aria-label="เครื่องมือ"></nav>
+
+  <div class="stage" id="stage">
+    <canvas id="cv" tabindex="0" aria-label="พื้นที่เขียนแบบ ใช้เมาส์หรือพิมพ์พิกัดในช่องคำสั่ง"></canvas>
+    <div class="dropmsg" id="dropmsg" hidden>วางไฟล์ DXF เพื่อเปิด</div>
+  </div>
+
+  <aside class="side">
+    <div class="sidetabs" role="tablist" aria-label="แผงข้อมูล">
+      <button type="button" role="tab" id="st-props" aria-selected="true" aria-controls="props">คุณสมบัติ</button>
+      <button type="button" role="tab" id="st-layers" aria-selected="false" aria-controls="layers">เลเยอร์</button>
+    </div>
+    <div id="props" class="sidepanel" role="tabpanel" aria-labelledby="st-props"></div>
+    <div id="layers" class="sidepanel" role="tabpanel" aria-labelledby="st-layers" hidden></div>
+  </aside>
+
+  <footer class="cmdbar">
+    <div id="prompt" class="prompt" aria-live="polite">พร้อม</div>
+    <div class="cmdrow">
+      <label for="cmd" class="vh">ช่องคำสั่ง</label>
+      <input id="cmd" autocomplete="off" spellcheck="false" placeholder="พิมพ์คำสั่ง เช่น เส้น / line หรือพิกัด 10,20 แล้วกด Enter">
+      <div class="toggles">
+        <button type="button" id="t-snap" aria-pressed="true" title="F3">ดูดจุด</button>
+        <button type="button" id="t-grid" aria-pressed="false" title="F7">กริด</button>
+        <button type="button" id="t-ortho" aria-pressed="false" title="F8">ตั้งฉาก</button>
+      </div>
+      <output id="coords" class="coords">0, 0</output>
+    </div>
+    <div id="msg" class="msg" role="status"></div>
+  </footer>
+</div>
+<script src="geom.js"></script>
+<script src="dxf.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
